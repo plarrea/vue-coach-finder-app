@@ -8,7 +8,10 @@
   <section>
     <base-card>
       <h2>Interested? Reach out now!</h2>
-      <base-button link :to="contactLink">Contact</base-button>
+      <base-button v-if="!isContacting" link :to="contactLink"
+        >Contact</base-button
+      >
+      <router-view></router-view>
     </base-card>
   </section>
   <section>
@@ -22,7 +25,6 @@
       <p>{{ description }}</p>
     </base-card>
   </section>
-  <router-view></router-view>
 </template>
 
 <script>
@@ -53,6 +55,9 @@ export default {
     },
     contactLink() {
       return `${this.$route.path}/contact`;
+    },
+    isContacting() {
+      return this.$route.path.includes("contact");
     },
   },
 };
