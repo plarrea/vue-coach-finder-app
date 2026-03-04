@@ -10,4 +10,10 @@ export default {
     const userId = rootGetters.userId;
     return coaches.some((coach) => coach.id === userId);
   },
+  shouldUpdate(state) {
+    const lastFetched = state.lastFetched;
+    if (!lastFetched) return true;
+    const currentTimestamp = new Date().getTime();
+    return (currentTimestamp - lastFetched) / 1000 > 60;
+  },
 };
