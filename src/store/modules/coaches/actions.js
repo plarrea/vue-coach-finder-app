@@ -20,4 +20,18 @@ export default {
     // const responseData = await response.json();
     context.commit("registerCoach", { ...coachData, id: userId });
   },
+  async loadCoaches(context) {
+    const url = `${process.env.VUE_APP_FIRE_BASE_URL}/coaches.json`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to load coaches");
+    }
+    const responseData = await response.json();
+    const coaches = [];
+    for (const key in responseData) {
+      const coach = { id: key, ...responseData[key] };
+      coaches.push(coach);
+    }
+    context.commit("setCoaches", coaches);
+  },
 };
