@@ -20,7 +20,8 @@ export default {
   },
   async loadRequests(context) {
     const coachId = context.rootGetters.userId;
-    const url = `${process.env.VUE_APP_FIRE_BASE_URL}/requests/${coachId}.json`;
+    const token = context.rootGetters.token;
+    const url = `${process.env.VUE_APP_FIRE_BASE_URL}/requests/${coachId}.json?auth=${token}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Failed to load requests");

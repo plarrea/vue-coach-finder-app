@@ -9,7 +9,9 @@ export default {
       areas: data.areas,
     };
 
-    const url = `${process.env.VUE_APP_FIRE_BASE_URL}/coaches/${userId}.json`;
+    const token = context.rootGetters.token;
+
+    const url = `${process.env.VUE_APP_FIRE_BASE_URL}/coaches/${userId}.json?auth=${token}`;
     const response = await fetch(url, {
       method: "PUT",
       body: JSON.stringify(coachData),
