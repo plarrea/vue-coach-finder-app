@@ -1,11 +1,33 @@
-const SIGNUP_URL =
-  "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+const ACCOUNTS_URL = "https://identitytoolkit.googleapis.com/v1/accounts";
 
 export default {
-  login() {},
+  async login(context, payload) {
+    const response = await fetch(
+      `${ACCOUNTS_URL}:signInWithPassword?key=${process.env.VUE_APP_AUTH_API_KEY}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to login.");
+    }
+
+    const responseData = await response.json();
+    context.commit("setUser", {
+      token: responseData.idToken,
+      userId: responseData.localId,
+      tokenExpiration: responseData.expiresIn,
+    });
+  },
   async signup(context, payload) {
     const response = await fetch(
-      `${SIGNUP_URL}${process.env.VUE_APP_AUTH_API_KEY}`,
+      `${ACCOUNTS_URL}:signUp?key=${process.env.VUE_APP_AUTH_API_KEY}`,
       {
         method: "POST",
         body: JSON.stringify({
