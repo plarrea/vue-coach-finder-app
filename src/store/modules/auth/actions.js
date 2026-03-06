@@ -1,0 +1,30 @@
+const SIGNUP_URL =
+  "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+
+export default {
+  login() {},
+  async signup(context, payload) {
+    const response = await fetch(
+      `${SIGNUP_URL}${process.env.VUE_APP_AUTH_API_KEY}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to signup.");
+    }
+
+    const responseData = await response.json();
+    context.commit("setUser", {
+      token: responseData.idToken,
+      userId: responseData.localId,
+      tokenExpiration: responseData.expiresIn,
+    });
+  },
+};
