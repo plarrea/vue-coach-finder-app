@@ -1,13 +1,30 @@
+import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 import CoachesList from "./pages/coaches/CoachesList.vue";
-import CoachDetails from "./pages/coaches/CoachDetails.vue";
-import ContactCoach from "./pages/requests/ContactCoach.vue";
-import CoachRegistration from "./pages/coaches/CoachRegistration.vue";
-import RequestsReceived from "./pages/requests/RequestsReceived.vue";
-import UserAuth from "./pages/auth/UserAuth.vue";
+// import CoachDetails from "./pages/coaches/CoachDetails.vue";
+// import ContactCoach from "./pages/requests/ContactCoach.vue";
+// import CoachRegistration from "./pages/coaches/CoachRegistration.vue";
+// import RequestsReceived from "./pages/requests/RequestsReceived.vue";
+// import UserAuth from "./pages/auth/UserAuth.vue";
 import NotFound from "./pages/NotFound.vue";
 import store from "./store";
+
+const CoachDetails = defineAsyncComponent(() =>
+  import("./pages/coaches/CoachDetails.vue"),
+);
+const ContactCoach = defineAsyncComponent(() =>
+  import("./pages/requests/ContactCoach.vue"),
+);
+const CoachRegistration = defineAsyncComponent(() =>
+  import("./pages/coaches/CoachRegistration.vue"),
+);
+const RequestsReceived = defineAsyncComponent(() =>
+  import("./pages/requests/RequestsReceived.vue"),
+);
+const UserAuth = defineAsyncComponent(() =>
+  import("./pages/auth/UserAuth.vue"),
+);
 
 const router = createRouter({
   history: createWebHistory(),
